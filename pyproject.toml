@@ -1,0 +1,31 @@
+[project]
+name = "xprof"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "cheroot>=10.0.1",
+    "etils[epath]>=1.13.0",
+    "fsspec>=2025.7.0",
+    "gcsfs>=2025.7.0",
+    "gviz-api>=1.10.0",
+    "packaging>=25.0",
+    "protobuf>=6.31.1",
+    "setuptools>=80.9.0",
+    "six>=1.17.0",
+    "werkzeug>=3.1.3",
+]
+
+[build-system]
+requires = ["hatchling", "hatch-build-scripts"]
+build-backend = "hatchling.build"
+
+[[tool.hatch.build.targets.wheel.hooks.build-scripts.scripts]]
+out_dir = "dist/out"
+commands = [
+    "bazel run plugin:build_pip_package -- -o $(pwd)/dist/out"
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["dist/out/xprof"]
